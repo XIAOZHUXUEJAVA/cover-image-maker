@@ -14,57 +14,75 @@ import { useTheme } from "next-themes";
 export function CoverEditor() {
   const { reset } = useCoverStore();
   const { theme, setTheme } = useTheme();
+  
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-muted/40">
-      <div className="sticky top-0 z-30 border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto flex h-14 items-center justify-between px-4">
-          <div className="flex items-center gap-2">
-            <Sparkles className="h-5 w-5" />
-            <span className="font-medium">Cover Maker</span>
+    <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-muted/20">
+      {/* Header with glassmorphism effect */}
+      <div className="sticky top-0 z-30 border-b border-border/20 bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/70 transition-all duration-300">
+        <div className="container mx-auto flex h-16 items-center justify-between px-6">
+          <div className="flex items-center gap-3">
+            <div className="flex items-center justify-center w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg shadow-sm">
+              <Sparkles className="h-4 w-4 text-white" />
+            </div>
+            <span className="font-semibold text-lg bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent">
+              Cover Maker
+            </span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <Button
               variant="ghost"
               size="icon"
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="h-9 w-9 rounded-lg transition-all duration-200 hover:bg-accent/50 hover:scale-105"
             >
               {theme === "dark" ? (
-                <Sun className="h-4 w-4" />
+                <Sun className="h-4 w-4 transition-transform duration-200 hover:rotate-12" />
               ) : (
-                <Moon className="h-4 w-4" />
+                <Moon className="h-4 w-4 transition-transform duration-200 hover:rotate-12" />
               )}
             </Button>
-            <Button variant="outline" onClick={reset}>
+            <Button 
+              onClick={reset}
+              className="h-9 px-4 rounded-lg bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-sm hover:shadow-md transition-all duration-200 hover:scale-105 hover:from-orange-600 hover:to-red-600 border-0"
+            >
               清除
             </Button>
           </div>
         </div>
       </div>
 
-      <div className="container mx-auto grid grid-cols-1 gap-6 p-4 lg:grid-cols-[1fr_360px]">
-        <div className="space-y-4">
-          <Card className="p-4 shadow-sm">
+      {/* Main content grid */}
+      <div className="container mx-auto grid grid-cols-1 gap-8 p-6 lg:grid-cols-[minmax(0,1fr)_440px]">
+        {/* Left column - Preview and actions */}
+        <div className="space-y-6">
+          {/* Preview canvas */}
+          <Card className="p-6 rounded-2xl border border-border/30 bg-card/50 backdrop-blur-sm shadow-soft transition-all duration-300 hover:shadow-gentle">
             <CoverCanvas />
           </Card>
-          <Card className="p-4 flex flex-col gap-3 shadow-sm">
-            <div className="flex flex-wrap items-center justify-between gap-3">
+          
+          {/* Actions panel */}
+          <Card className="p-5 rounded-2xl border border-border/30 bg-card/50 backdrop-blur-sm shadow-soft transition-all duration-300 hover:shadow-gentle">
+            <div className="flex flex-wrap items-center justify-between gap-4">
               <ImagePicker />
               <ExportButtons />
             </div>
           </Card>
         </div>
-        <div className="lg:sticky lg:top-16 h-fit">
-          <Card className="p-4 shadow-sm">
+        
+        {/* Right column - Controls */}
+        <div className="lg:sticky lg:top-20 h-fit">
+          <Card className="p-5 rounded-2xl border border-border/30 bg-card/50 backdrop-blur-sm shadow-soft transition-all duration-300 hover:shadow-gentle max-h-[calc(100vh-6rem)] overflow-auto">
             <ControlsPanel />
           </Card>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 pb-6">
-        <Separator />
-        {/* <div className="flex items-center justify-between py-4 text-xs text-muted-foreground">
+      {/* Footer */}
+      <div className="container mx-auto px-6 pb-8 mt-8">
+        <Separator className="bg-border/20" />
+        {/* <div className="flex items-center justify-between py-4 text-sm text-muted-foreground/60">
           <span>© {new Date().getFullYear()} Cover Maker</span>
-          <Link href="/editor" className="hover:underline">
+          <Link href="/editor" className="hover:text-foreground/80 transition-colors duration-200">
             回到顶部
           </Link>
         </div> */}

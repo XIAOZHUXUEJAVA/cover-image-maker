@@ -28,7 +28,7 @@ export function ControlsPanel() {
   const state = useCoverStore();
 
   return (
-    <Tabs defaultValue="text" className="space-y-4">
+    <Tabs defaultValue="text" className="space-y-6">
       <TabsList>
         <TabsTrigger value="text">文字</TabsTrigger>
         <TabsTrigger value="layout">布局</TabsTrigger>
@@ -37,8 +37,8 @@ export function ControlsPanel() {
         <TabsTrigger value="bg">背景</TabsTrigger>
       </TabsList>
 
-      <TabsContent value="text" className="space-y-4">
-        <div className="space-y-2">
+      <TabsContent value="text" className="space-y-6">
+        <div className="space-y-3">
           <Label htmlFor="title">标题</Label>
           <Input
             id="title"
@@ -47,7 +47,7 @@ export function ControlsPanel() {
             placeholder="输入文章标题"
           />
         </div>
-        <div className="space-y-2">
+        <div className="space-y-3">
           <Label htmlFor="subtitle">副标题</Label>
           <Input
             id="subtitle"
@@ -56,7 +56,7 @@ export function ControlsPanel() {
             placeholder="可选：副标题"
           />
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-5">
           <div>
             <div className="flex items-center justify-between">
               <Label>标题字号</Label>
@@ -88,8 +88,8 @@ export function ControlsPanel() {
             />
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
+        <div className="grid grid-cols-2 gap-5">
+          <div className="space-y-3">
             <Label>标题颜色</Label>
             <Input
               type="color"
@@ -97,7 +97,7 @@ export function ControlsPanel() {
               onChange={(e) => state.setTitleColor(e.target.value)}
             />
           </div>
-          <div className="space-y-2">
+          <div className="space-y-3">
             <Label>副标题颜色</Label>
             <Input
               type="color"
@@ -106,7 +106,7 @@ export function ControlsPanel() {
             />
           </div>
         </div>
-        <div className="space-y-2">
+        <div className="space-y-3">
           <Label>字体</Label>
           <Select
             value={state.fontFamily}
@@ -126,8 +126,8 @@ export function ControlsPanel() {
         </div>
       </TabsContent>
 
-      <TabsContent value="layout" className="space-y-4">
-        <div className="space-y-2">
+      <TabsContent value="layout" className="space-y-6">
+        <div className="space-y-3">
           <Label>对齐</Label>
           <Select
             value={state.textAlign}
@@ -145,7 +145,7 @@ export function ControlsPanel() {
             </SelectContent>
           </Select>
         </div>
-        <div className="space-y-2">
+        <div className="space-y-3">
           <Label>垂直位置</Label>
           <Select
             value={state.verticalAlign}
@@ -163,7 +163,7 @@ export function ControlsPanel() {
             </SelectContent>
           </Select>
         </div>
-        <div className="space-y-2">
+        <div className="space-y-3">
           <div className="flex items-center justify-between">
             <Label>内边距</Label>
             <span className="text-xs text-muted-foreground">
@@ -178,7 +178,7 @@ export function ControlsPanel() {
             onValueChange={([v]) => state.setPadding(v)}
           />
         </div>
-        <div className="space-y-2">
+        <div className="space-y-3">
           <div className="flex items-center justify-between">
             <Label>文本最大宽度</Label>
             <span className="text-xs text-muted-foreground">
@@ -195,9 +195,9 @@ export function ControlsPanel() {
         </div>
       </TabsContent>
 
-      <TabsContent value="style" className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
+      <TabsContent value="style" className="space-y-6">
+        <div className="grid grid-cols-2 gap-5">
+          <div className="space-y-3">
             <Label>遮罩颜色</Label>
             <Input
               type="color"
@@ -205,7 +205,7 @@ export function ControlsPanel() {
               onChange={(e) => state.setOverlayColor(e.target.value)}
             />
           </div>
-          <div className="space-y-2">
+          <div className="space-y-3">
             <Label>遮罩不透明度</Label>
             <Slider
               value={[Math.round(state.overlayOpacity * 100)]}
@@ -216,13 +216,13 @@ export function ControlsPanel() {
             />
           </div>
         </div>
-        <div className="space-y-2">
+        <div className="space-y-3">
           <Label>快速风格</Label>
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-3 gap-3">
             {quickPresets.map((p) => (
               <button
                 key={p.name}
-                className="h-10 rounded border text-sm"
+                className="h-10 rounded-lg border text-sm"
                 onClick={() => state.applyPreset(p)}
               >
                 {p.name}
@@ -231,7 +231,7 @@ export function ControlsPanel() {
           </div>
         </div>
         <Separator />
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4">
           <label className="flex items-center gap-2 text-sm">
             <input
               type="checkbox"
@@ -251,7 +251,7 @@ export function ControlsPanel() {
         </div>
       </TabsContent>
 
-      <TabsContent value="canvas" className="space-y-4">
+      <TabsContent value="canvas" className="space-y-6">
         <div className="space-y-2">
           <Label>画布比例</Label>
           <Select
@@ -271,9 +271,9 @@ export function ControlsPanel() {
         </div>
       </TabsContent>
 
-      <TabsContent value="bg" className="space-y-4">
-        <div className="grid grid-cols-3 gap-4">
-          <div className="space-y-2">
+      <TabsContent value="bg" className="space-y-6">
+        <div className="grid grid-cols-3 gap-5">
+          <div className="space-y-3">
             <div className="flex items-center justify-between">
               <Label>缩放</Label>
               <span className="text-xs text-muted-foreground">
@@ -288,8 +288,8 @@ export function ControlsPanel() {
               onValueChange={([v]) => state.setImageScale(v)}
             />
           </div>
-          <div className="space-y-2">
-            <div className="flex items-center justify之间">
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
               <Label>水平偏移</Label>
               <span className="text-xs text-muted-foreground">
                 {state.imagePosX}%
@@ -303,7 +303,7 @@ export function ControlsPanel() {
               onValueChange={([v]) => state.setImagePosX(v)}
             />
           </div>
-          <div className="space-y-2">
+          <div className="space-y-3">
             <div className="flex items-center justify-between">
               <Label>垂直偏移</Label>
               <span className="text-xs text-muted-foreground">
@@ -319,13 +319,13 @@ export function ControlsPanel() {
             />
           </div>
         </div>
-        <div className="space-y-2">
+        <div className="space-y-3">
           <Label>示例图库</Label>
-          <div className="grid grid-cols-4 gap-2">
+          <div className="grid grid-cols-4 gap-3">
             {sampleImages.map((url) => (
               <button
                 key={url}
-                className="relative h-16 w-full overflow-hidden rounded border"
+                className="relative h-16 w-full overflow-hidden rounded-lg border"
                 onClick={() => state.setImageUrl(url)}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -339,7 +339,7 @@ export function ControlsPanel() {
           </div>
         </div>
         <Separator />
-        <div className="space-y-2">
+        <div className="space-y-4">
           <div className="flex items-center justify-between">
             <Label>显示头像</Label>
             <input
@@ -350,7 +350,7 @@ export function ControlsPanel() {
           </div>
           {state.showAvatar ? (
             <>
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <Label>头像大小</Label>
                 <Slider
                   value={[state.avatarSize]}
@@ -360,8 +360,8 @@ export function ControlsPanel() {
                   onValueChange={([v]) => state.setAvatarSize(v)}
                 />
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
+              <div className="grid grid-cols-2 gap-5">
+                <div className="space-y-3">
                   <Label>头像水平位移 (px)</Label>
                   <Slider
                     value={[state.avatarOffsetX]}
@@ -371,7 +371,7 @@ export function ControlsPanel() {
                     onValueChange={([v]) => state.setAvatarOffsetX(v)}
                   />
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <Label>头像垂直位移 (px)</Label>
                   <Slider
                     value={[state.avatarOffsetY]}

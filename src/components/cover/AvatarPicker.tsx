@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 
 const gallery = [
   "https://images.unsplash.com/photo-1607746882042-944635dfe10e?q=80&w=256&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1541534401786-2077eed87a72?q=80&w=256&auto=format&fit=crop",
   "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?q=80&w=256&auto=format&fit=crop",
   "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=256&auto=format&fit=crop",
 ];
@@ -70,4 +69,3 @@ export function AvatarPicker() {
     </div>
   );
 }
-
