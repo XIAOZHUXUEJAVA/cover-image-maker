@@ -2,6 +2,7 @@ import { create } from 'zustand'
 
 export interface HistoryAction {
   type: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   payload: any
   timestamp: number
 }
