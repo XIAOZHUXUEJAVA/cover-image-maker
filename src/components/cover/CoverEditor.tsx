@@ -13,6 +13,8 @@ import { Sun, Moon, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import { useEffect } from "react";
+import { UsageGuide } from "@/components/ui/usage-guide";
+import { WelcomeDialog } from "@/components/ui/welcome-dialog";
 
 export function CoverEditor() {
   const { reset } = useCoverStore();
@@ -47,6 +49,7 @@ export function CoverEditor() {
   
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-muted/20">
+      <WelcomeDialog />
       {/* Header with glassmorphism effect */}
       <div className="sticky top-0 z-30 border-b border-border/20 bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/70 transition-all duration-300">
         <div className="container mx-auto flex h-16 items-center justify-between px-6">
@@ -59,6 +62,7 @@ export function CoverEditor() {
             </span>
           </div>
           <div className="flex items-center gap-3">
+            <UsageGuide />
             <Button
               variant="ghost"
               size="icon"
@@ -85,24 +89,6 @@ export function CoverEditor() {
       <div className="container mx-auto grid grid-cols-1 gap-6 p-4 lg:gap-8 lg:p-6 lg:grid-cols-[minmax(0,1fr)_440px]">
         {/* Left column - Preview and actions */}
         <div className="space-y-6">
-          {/* Usage Guide */}
-          <Card className="p-4 rounded-2xl border border-blue-200/50 bg-gradient-to-r from-blue-50/50 to-indigo-50/50 backdrop-blur-sm">
-            <div className="flex items-start gap-3">
-              {/* <div className="flex-shrink-0 w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
-                <Sparkles className="w-4 h-4 text-white" />
-              </div> */}
-              <div className="flex-1 min-w-0">
-                <h3 className="text-sm font-medium text-blue-900 mb-2">快速上手指南</h3>
-                <div className="text-xs text-blue-700 space-y-1">
-                  <p>• <strong>添加内容：</strong>在右侧&ldquo;内容&rdquo;标签页输入标题和副标题</p>
-                  <p>• <strong>选择背景：</strong>点击&ldquo;选择图片&rdquo;或拖拽图片到下方区域</p>
-                  <p>• <strong>调整样式：</strong>使用&ldquo;样式&rdquo;和&ldquo;布局&rdquo;标签页自定义外观</p>
-                  <p>• <strong>导出封面：</strong>完成后点击下方&ldquo;下载 PNG&rdquo;或&ldquo;下载 JPG&rdquo;</p>
-                </div>
-              </div>
-            </div>
-          </Card>
-
           {/* Preview canvas */}
           <Card className="p-4 rounded-2xl border border-border/30 bg-card/50 backdrop-blur-sm shadow-soft transition-all duration-300 hover:shadow-gentle">
             <div className="w-full overflow-auto">
