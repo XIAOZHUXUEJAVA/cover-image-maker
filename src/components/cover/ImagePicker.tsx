@@ -47,6 +47,14 @@ export function ImagePicker() {
       >
         选择图片
       </Button>
+      <Button 
+        type="button" 
+        variant="outline" 
+        onClick={() => setImageUrl(null)}
+        className="shrink-0"
+      >
+        清除图片
+      </Button>
       <div className="flex-1">
         <span className={`text-sm transition-colors ${
           isDragActive ? 'text-primary font-medium' : 'text-muted-foreground'
