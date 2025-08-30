@@ -13,6 +13,8 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import { AvatarPicker } from "@/components/cover/AvatarPicker";
+import { CanvasSizeSelector } from "@/components/cover/CanvasSizeSelector";
+import { HistoryToolbar } from "@/components/cover/HistoryToolbar";
 import type { Preset } from "@/lib/store/cover-store";
 
 const fonts = [
@@ -26,7 +28,7 @@ const fonts = [
 
 const quickPresets = [
   {
-    name: "Notion Minimal",
+    name: "简约风格",
     overlayColor: "#FFFFFF",
     overlayOpacity: 0.12,
     titleColor: "#111111",
@@ -38,7 +40,7 @@ const quickPresets = [
     textMaxWidth: 62,
   },
   {
-    name: "Dribbble Pastel",
+    name: "清新风格",
     overlayColor: "#F3E8FF",
     overlayOpacity: 0.24,
     titleColor: "#1F2937",
@@ -50,7 +52,7 @@ const quickPresets = [
     textMaxWidth: 62,
   },
   {
-    name: "Behance Editorial",
+    name: "商务风格",
     overlayColor: "#000000",
     overlayOpacity: 0.35,
     titleColor: "#FFFFFF",
@@ -59,6 +61,42 @@ const quickPresets = [
     padding: 64,
     titleSize: 64,
     subtitleSize: 24,
+    textMaxWidth: 58,
+  },
+  {
+    name: "科技风格",
+    overlayColor: "#1E40AF",
+    overlayOpacity: 0.4,
+    titleColor: "#FFFFFF",
+    subtitleColor: "#DBEAFE",
+    textAlign: "center" as const,
+    padding: 48,
+    titleSize: 52,
+    subtitleSize: 20,
+    textMaxWidth: 65,
+  },
+  {
+    name: "温暖风格",
+    overlayColor: "#F59E0B",
+    overlayOpacity: 0.3,
+    titleColor: "#FFFFFF",
+    subtitleColor: "#FEF3C7",
+    textAlign: "center" as const,
+    padding: 52,
+    titleSize: 58,
+    subtitleSize: 24,
+    textMaxWidth: 60,
+  },
+  {
+    name: "优雅风格",
+    overlayColor: "#6B21A8",
+    overlayOpacity: 0.35,
+    titleColor: "#FFFFFF",
+    subtitleColor: "#E9D5FF",
+    textAlign: "center" as const,
+    padding: 60,
+    titleSize: 54,
+    subtitleSize: 22,
     textMaxWidth: 58,
   },
 ] satisfies Preset[];
@@ -85,28 +123,38 @@ export function ControlsPanel() {
           <span className="text-sm font-medium">快速操作</span>
         </div>
         <div className="flex items-center gap-2">
-          <button
-            className="px-3 py-1 text-xs bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
-            onClick={() => state.applyPreset(quickPresets[0])}
-          >
-            简约风格
-          </button>
+          <Select onValueChange={(value) => {
+            const preset = quickPresets.find(p => p.name === value);
+            if (preset) state.applyPreset(preset);
+          }}>
+            <SelectTrigger className="w-32 h-7 text-xs">
+              <SelectValue placeholder="选择风格" />
+            </SelectTrigger>
+            <SelectContent>
+              {quickPresets.map((preset) => (
+                <SelectItem key={preset.name} value={preset.name} className="text-xs">
+                  {preset.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
           <button
             className="px-3 py-1 text-xs bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/90 transition-colors"
             onClick={() => state.reset()}
           >
             重置
           </button>
+          <HistoryToolbar />
         </div>
       </div>
 
       <Tabs defaultValue="content" className="space-y-6">
         <TabsList className="grid w-full grid-cols-5">
+          <TabsTrigger value="canvas" className="text-xs">画布</TabsTrigger>
           <TabsTrigger value="content" className="text-xs">内容</TabsTrigger>
           <TabsTrigger value="style" className="text-xs">样式</TabsTrigger>
           <TabsTrigger value="layout" className="text-xs">布局</TabsTrigger>
           <TabsTrigger value="bg" className="text-xs">背景</TabsTrigger>
-          <TabsTrigger value="canvas" className="text-xs">画布</TabsTrigger>
         </TabsList>
 
         <TabsContent value="content" className="space-y-6">
@@ -442,6 +490,8 @@ export function ControlsPanel() {
         </TabsContent>
 
         <TabsContent value="canvas" className="space-y-6">
+          <CanvasSizeSelector />
+          
           <div className="space-y-2">
             <Label>画布比例</Label>
             <Select

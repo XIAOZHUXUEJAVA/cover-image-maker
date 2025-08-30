@@ -3,17 +3,47 @@ import { ControlsPanel } from "@/components/cover/ControlsPanel";
 import { CoverCanvas } from "@/components/cover/CoverCanvas";
 import { ImagePicker } from "@/components/cover/ImagePicker";
 import { ExportButtons } from "@/components/cover/ExportButtons";
+import { KeyboardHandler } from "@/components/cover/KeyboardHandler";
 import { Button } from "@/components/ui/button";
 import { useCoverStore } from "@/lib/store/cover-store";
+import { useCoverHistory } from "@/hooks/useCoverHistory";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Sun, Moon, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
+import { useEffect } from "react";
 
 export function CoverEditor() {
   const { reset } = useCoverStore();
   const { theme, setTheme } = useTheme();
+  const { undo, redo, canUndo, canRedo } = useCoverHistory();
+
+  // 全局键盘事件处理
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // 避免在输入框中触发
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+        return;
+      }
+      
+      if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) {
+        e.preventDefault();
+        if (canUndo) {
+          undo();
+        }
+      } else if (((e.ctrlKey || e.metaKey) && e.key === 'y') || 
+                 ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'Z')) {
+        e.preventDefault();
+        if (canRedo) {
+          redo();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [undo, redo, canUndo, canRedo]);
   
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-muted/20">
