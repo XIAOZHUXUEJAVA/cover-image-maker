@@ -93,7 +93,7 @@ const initialState = {
   imagePosY: 0,
   textMaxWidth: 62,
   autoContrast: false,
-  showGuides: true,
+  showGuides: false,
   avatarUrl: null as string | null,
   showAvatar: false,
   avatarSize: 72,

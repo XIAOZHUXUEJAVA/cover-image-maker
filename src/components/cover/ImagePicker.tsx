@@ -30,14 +30,33 @@ export function ImagePicker() {
   });
 
   return (
-    <div {...getRootProps()} className="flex items-center gap-2">
+    <div 
+      {...getRootProps()} 
+      className={`flex items-center gap-3 p-3 rounded-lg border-2 border-dashed transition-all duration-200 ${
+        isDragActive 
+          ? 'border-primary bg-primary/5 scale-[1.02]' 
+          : 'border-border hover:border-primary/50 hover:bg-accent/30'
+      }`}
+    >
       <input {...getInputProps()} />
-      <Button type="button" variant="secondary" onClick={open}>
+      <Button 
+        type="button" 
+        variant="secondary" 
+        onClick={open}
+        className="shrink-0"
+      >
         选择图片
       </Button>
-      <span className="text-sm text-muted-foreground">
-        或拖拽图片到这里{isDragActive ? "…" : ""}
-      </span>
+      <div className="flex-1">
+        <span className={`text-sm transition-colors ${
+          isDragActive ? 'text-primary font-medium' : 'text-muted-foreground'
+        }`}>
+          {isDragActive ? '松开鼠标上传图片' : '或拖拽图片到这里'}
+        </span>
+        <div className="text-xs text-muted-foreground mt-1">
+          支持 JPG、PNG、WebP 格式
+        </div>
+      </div>
     </div>
   );
 }

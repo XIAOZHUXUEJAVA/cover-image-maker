@@ -52,7 +52,7 @@ export function CoverEditor() {
       </div>
 
       {/* Main content grid */}
-      <div className="container mx-auto grid grid-cols-1 gap-8 p-6 lg:grid-cols-[minmax(0,1fr)_440px]">
+      <div className="container mx-auto grid grid-cols-1 gap-6 p-4 lg:gap-8 lg:p-6 lg:grid-cols-[minmax(0,1fr)_440px]">
         {/* Left column - Preview and actions */}
         <div className="space-y-6">
           {/* Preview canvas */}
@@ -71,7 +71,7 @@ export function CoverEditor() {
         
         {/* Right column - Controls */}
         <div className="lg:sticky lg:top-20 h-fit">
-          <Card className="p-5 rounded-2xl border border-border/30 bg-card/50 backdrop-blur-sm shadow-soft transition-all duration-300 hover:shadow-gentle max-h-[calc(100vh-6rem)] overflow-auto">
+          <Card className="p-4 lg:p-5 rounded-2xl border border-border/30 bg-card/50 backdrop-blur-sm shadow-soft transition-all duration-300 hover:shadow-gentle max-h-[calc(100vh-6rem)] overflow-auto">
             <ControlsPanel />
           </Card>
         </div>

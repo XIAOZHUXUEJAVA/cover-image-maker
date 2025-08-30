@@ -54,7 +54,7 @@ export function CoverCanvas() {
           />
         ) : (
           <div className="absolute inset-0 grid place-items-center text-muted-foreground">
-            选择一张背景图片
+            {/* 选择一张背景图片 */}
           </div>
         )}
 
