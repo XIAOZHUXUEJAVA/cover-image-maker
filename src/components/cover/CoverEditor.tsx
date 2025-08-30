@@ -104,8 +104,10 @@ export function CoverEditor() {
           </Card>
 
           {/* Preview canvas */}
-          <Card className="p-6 rounded-2xl border border-border/30 bg-card/50 backdrop-blur-sm shadow-soft transition-all duration-300 hover:shadow-gentle">
-            <CoverCanvas />
+          <Card className="p-4 rounded-2xl border border-border/30 bg-card/50 backdrop-blur-sm shadow-soft transition-all duration-300 hover:shadow-gentle">
+            <div className="w-full overflow-auto">
+              <CoverCanvas />
+            </div>
           </Card>
           
           {/* Actions panel */}

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useCanvasStore, type CanvasSize } from '@/lib/store/canvas-store'
 import { useCoverStore } from '@/lib/store/cover-store'
 import { Button } from '@/components/ui/button'
@@ -30,23 +30,37 @@ export function CanvasSizeSelector() {
   const documentSizes = allSizes.filter(s => s.category === 'document')
   const customSizes = allSizes.filter(s => s.category === 'custom')
   
+  // 监听当前尺寸变化，同步更新 aspectRatio
+  useEffect(() => {
+    setAspectRatio(currentSize.aspectRatio)
+  }, [currentSize, setAspectRatio])
+  
   const handleSizeChange = (size: CanvasSize) => {
     setCurrentSize(size)
     setAspectRatio(size.aspectRatio)
   }
   
   const handleAddCustomSize = () => {
-    if (!customName || !customWidth || !customHeight) return
+    console.log('handleAddCustomSize called', { customName, customWidth, customHeight })
+    
+    if (!customName || !customWidth || !customHeight) {
+      console.log('Missing required fields')
+      return
+    }
     
     const width = parseInt(customWidth)
     const height = parseInt(customHeight)
     
-    if (width <= 0 || height <= 0) return
+    if (width <= 0 || height <= 0) {
+      console.log('Invalid dimensions', { width, height })
+      return
+    }
     
     const aspectRatio = `${width} / ${height}`
     
     if (editingSize) {
       // 编辑模式
+      console.log('Editing size', editingSize.id)
       updateCustomSize(editingSize.id, {
         name: customName,
         width,
@@ -55,6 +69,7 @@ export function CanvasSizeSelector() {
       })
     } else {
       // 添加模式
+      console.log('Adding new size', { name: customName, width, height, aspectRatio })
       addCustomSize({
         name: customName,
         width,
@@ -211,7 +226,7 @@ export function CanvasSizeSelector() {
             <div className="text-center py-8 text-muted-foreground">
               <Monitor className="w-8 h-8 mx-auto mb-2 opacity-50" />
               <p className="text-sm">暂无自定义尺寸</p>
-              <p className="text-xs">点击上方"自定义"按钮添加</p>
+              <p className="text-xs">点击上方&ldquo;自定义&rdquo;按钮添加</p>
             </div>
           ) : (
             customSizes.map((size) => (

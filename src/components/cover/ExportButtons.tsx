@@ -4,10 +4,12 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { toPng, toJpeg } from "html-to-image";
 import { Download, Loader2 } from "lucide-react";
+import { useCanvasStore } from "@/lib/store/canvas-store";
 
 export function ExportButtons() {
   const [isExporting, setIsExporting] = useState(false);
   const [exportProgress, setExportProgress] = useState("");
+  const { currentSize } = useCanvasStore();
 
   async function exportImage(kind: "png" | "jpg") {
     const node = document.getElementById("cover-canvas");
@@ -21,14 +23,50 @@ export function ExportButtons() {
       toast.loading("正在生成图片...", { id: "export-progress" });
       setExportProgress("正在渲染图片...");
       
+      // 临时保存原始样式
+      const originalStyle = {
+        width: node.style.width,
+        height: node.style.height,
+        transform: node.style.transform,
+        margin: node.style.margin,
+        padding: node.style.padding,
+        borderRadius: node.style.borderRadius,
+        boxShadow: node.style.boxShadow
+      };
+      
+      // 临时设置为导出尺寸，移除所有装饰性样式
+      node.style.width = `${currentSize.width}px`;
+      node.style.height = `${currentSize.height}px`;
+      node.style.transform = 'none';
+      node.style.margin = '0';
+      node.style.padding = '0';
+      node.style.borderRadius = '0';
+      node.style.boxShadow = 'none';
+      
       const dataUrl =
         kind === "png"
-          ? await toPng(node, { cacheBust: true, pixelRatio: 2 })
+          ? await toPng(node, { 
+              cacheBust: true, 
+              pixelRatio: 1,
+              width: currentSize.width,
+              height: currentSize.height
+            })
           : await toJpeg(node, {
               cacheBust: true,
-              pixelRatio: 2,
+              pixelRatio: 1,
+              width: currentSize.width,
+              height: currentSize.height,
               quality: 0.92,
             });
+      
+      // 恢复原始样式
+      node.style.width = originalStyle.width;
+      node.style.height = originalStyle.height;
+      node.style.transform = originalStyle.transform;
+      node.style.margin = originalStyle.margin;
+      node.style.padding = originalStyle.padding;
+      node.style.borderRadius = originalStyle.borderRadius;
+      node.style.boxShadow = originalStyle.boxShadow;
       
       setExportProgress("正在下载...");
       toast.loading("正在下载文件...", { id: "export-progress" });

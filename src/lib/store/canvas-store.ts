@@ -44,6 +44,7 @@ export const useCanvasStore = create<CanvasState>()(
       setCurrentSize: (size) => set({ currentSize: size }),
       
       addCustomSize: (sizeData) => {
+        console.log('addCustomSize called with:', sizeData)
         const id = `custom_${Date.now()}`
         const newSize: CanvasSize = {
           ...sizeData,
@@ -51,14 +52,30 @@ export const useCanvasStore = create<CanvasState>()(
           category: 'custom'
         }
         
-        set((state) => ({
-          customSizes: [...state.customSizes, newSize]
-        }))
+        console.log('Creating new size:', newSize)
+        
+        set((state) => {
+          const newState = {
+            customSizes: [...state.customSizes, newSize]
+          }
+          console.log('New customSizes:', newState.customSizes)
+          return newState
+        })
       },
       
-      removeCustomSize: (id) => set((state) => ({
-        customSizes: state.customSizes.filter(size => size.id !== id)
-      })),
+      removeCustomSize: (id) => set((state) => {
+        const newCustomSizes = state.customSizes.filter(size => size.id !== id)
+        
+        // 如果删除的是当前选中的尺寸，切换到默认尺寸
+        const newCurrentSize = state.currentSize.id === id 
+          ? defaultSizes[0] 
+          : state.currentSize
+        
+        return {
+          customSizes: newCustomSizes,
+          currentSize: newCurrentSize
+        }
+      }),
       
       updateCustomSize: (id, sizeData) => set((state) => ({
         customSizes: state.customSizes.map(size => 

@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
+import { useCanvasStore } from "./canvas-store";
 
 type TextAlign = "left" | "center" | "right";
 
@@ -179,3 +180,11 @@ export const useCoverStore = create<CoverState>()(
     }
   )
 );
+
+// 同步 canvas-store 的尺寸变化到 cover-store 的 aspectRatio
+if (typeof window !== 'undefined') {
+  useCanvasStore.subscribe((state) => {
+    const ratio = `${state.currentSize.width} / ${state.currentSize.height}`;
+    useCoverStore.getState().setAspectRatio(ratio);
+  });
+}
