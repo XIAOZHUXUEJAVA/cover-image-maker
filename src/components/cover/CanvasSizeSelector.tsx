@@ -14,12 +14,13 @@ import {
   DialogTrigger 
 } from '@/components/ui/dialog'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Plus, Trash2, Monitor, FileText, Smartphone } from 'lucide-react'
+import { Plus, Trash2, Monitor, FileText, Smartphone, Edit } from 'lucide-react'
 
 export function CanvasSizeSelector() {
-  const { currentSize, setCurrentSize, addCustomSize, removeCustomSize, getAllSizes } = useCanvasStore()
+  const { currentSize, setCurrentSize, addCustomSize, removeCustomSize, updateCustomSize, getAllSizes } = useCanvasStore()
   const { setAspectRatio } = useCoverStore()
   const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [editingSize, setEditingSize] = useState<CanvasSize | null>(null)
   const [customName, setCustomName] = useState('')
   const [customWidth, setCustomWidth] = useState('')
   const [customHeight, setCustomHeight] = useState('')
@@ -44,18 +45,49 @@ export function CanvasSizeSelector() {
     
     const aspectRatio = `${width} / ${height}`
     
-    addCustomSize({
-      name: customName,
-      width,
-      height,
-      aspectRatio
-    })
+    if (editingSize) {
+      // 编辑模式
+      updateCustomSize(editingSize.id, {
+        name: customName,
+        width,
+        height,
+        aspectRatio
+      })
+    } else {
+      // 添加模式
+      addCustomSize({
+        name: customName,
+        width,
+        height,
+        aspectRatio
+      })
+    }
     
     // 清空表单
     setCustomName('')
     setCustomWidth('')
     setCustomHeight('')
+    setEditingSize(null)
     setIsDialogOpen(false)
+  }
+  
+  const handleEditSize = (size: CanvasSize) => {
+    setEditingSize(size)
+    setCustomName(size.name)
+    setCustomWidth(size.width.toString())
+    setCustomHeight(size.height.toString())
+    setIsDialogOpen(true)
+  }
+  
+  const handleDialogClose = (open: boolean) => {
+    setIsDialogOpen(open)
+    if (!open) {
+      // 关闭对话框时清空编辑状态
+      setEditingSize(null)
+      setCustomName('')
+      setCustomWidth('')
+      setCustomHeight('')
+    }
   }
   
   const getCategoryIcon = (category: string) => {
@@ -70,7 +102,7 @@ export function CanvasSizeSelector() {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <Label className="text-sm font-medium">画布尺寸</Label>
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <Dialog open={isDialogOpen} onOpenChange={handleDialogClose}>
           <DialogTrigger asChild>
             <Button variant="outline" size="sm">
               <Plus className="w-4 h-4 mr-1" />
@@ -79,7 +111,7 @@ export function CanvasSizeSelector() {
           </DialogTrigger>
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
-              <DialogTitle>添加自定义尺寸</DialogTitle>
+              <DialogTitle>{editingSize ? '编辑自定义尺寸' : '添加自定义尺寸'}</DialogTitle>
             </DialogHeader>
             <div className="space-y-4">
               <div>
@@ -114,7 +146,7 @@ export function CanvasSizeSelector() {
                 </div>
               </div>
               <Button onClick={handleAddCustomSize} className="w-full">
-                添加尺寸
+                {editingSize ? '保存修改' : '添加尺寸'}
               </Button>
             </div>
           </DialogContent>
@@ -198,6 +230,14 @@ export function CanvasSizeSelector() {
                       </div>
                     </div>
                   </div>
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handleEditSize(size)}
+                  className="p-2"
+                >
+                  <Edit className="w-4 h-4" />
                 </Button>
                 <Button
                   variant="outline"

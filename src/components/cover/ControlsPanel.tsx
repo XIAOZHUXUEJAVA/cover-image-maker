@@ -148,7 +148,7 @@ export function ControlsPanel() {
         </div>
       </div>
 
-      <Tabs defaultValue="content" className="space-y-6">
+      <Tabs defaultValue="canvas" className="space-y-6">
         <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="canvas" className="text-xs">画布</TabsTrigger>
           <TabsTrigger value="content" className="text-xs">内容</TabsTrigger>

@@ -31,6 +31,7 @@ interface CanvasState {
   setCurrentSize: (size: CanvasSize) => void
   addCustomSize: (size: Omit<CanvasSize, 'id' | 'category'>) => void
   removeCustomSize: (id: string) => void
+  updateCustomSize: (id: string, size: Omit<CanvasSize, 'id' | 'category'>) => void
   getAllSizes: () => CanvasSize[]
 }
 
@@ -57,6 +58,14 @@ export const useCanvasStore = create<CanvasState>()(
       
       removeCustomSize: (id) => set((state) => ({
         customSizes: state.customSizes.filter(size => size.id !== id)
+      })),
+      
+      updateCustomSize: (id, sizeData) => set((state) => ({
+        customSizes: state.customSizes.map(size => 
+          size.id === id 
+            ? { ...sizeData, id, category: 'custom' as const }
+            : size
+        )
       })),
       
       getAllSizes: () => {
