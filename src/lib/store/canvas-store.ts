@@ -7,18 +7,17 @@ export interface CanvasSize {
   width: number;
   height: number;
   aspectRatio: string;
-  category: "social" | "document" | "custom";
+  category: "preset" | "custom";
 }
 
 export const defaultSizes: CanvasSize[] = [
-  // 社交媒体
   {
     id: "wechat",
     name: "",
     width: 900,
     height: 500,
     aspectRatio: "9 / 5",
-    category: "social",
+    category: "preset",
   },
   {
     id: "weibo",
@@ -26,7 +25,7 @@ export const defaultSizes: CanvasSize[] = [
     width: 560,
     height: 260,
     aspectRatio: "56 / 26",
-    category: "social",
+    category: "preset",
   },
   {
     id: "instagram",
@@ -34,7 +33,7 @@ export const defaultSizes: CanvasSize[] = [
     width: 1080,
     height: 1080,
     aspectRatio: "1 / 1",
-    category: "social",
+    category: "preset",
   },
   {
     id: "youtube",
@@ -42,7 +41,7 @@ export const defaultSizes: CanvasSize[] = [
     width: 1280,
     height: 720,
     aspectRatio: "16 / 9",
-    category: "social",
+    category: "preset",
   },
   {
     id: "facebook",
@@ -50,17 +49,15 @@ export const defaultSizes: CanvasSize[] = [
     width: 820,
     height: 312,
     aspectRatio: "205 / 78",
-    category: "social",
+    category: "preset",
   },
-
-  // 文档
   {
     id: "ppt",
     name: "",
     width: 1920,
     height: 1080,
     aspectRatio: "16 / 9",
-    category: "social",
+    category: "preset",
   },
   {
     id: "a4",
@@ -68,7 +65,7 @@ export const defaultSizes: CanvasSize[] = [
     width: 1754,
     height: 1240,
     aspectRatio: "1754 / 1240",
-    category: "social",
+    category: "preset",
   },
   {
     id: "poster",
@@ -76,7 +73,7 @@ export const defaultSizes: CanvasSize[] = [
     width: 1080,
     height: 1920,
     aspectRatio: "9 / 16",
-    category: "social",
+    category: "preset",
   },
 ];
 

@@ -40,8 +40,7 @@ export function CanvasSizeSelector() {
   const [customHeight, setCustomHeight] = useState("");
 
   const allSizes = getAllSizes();
-  const socialSizes = allSizes.filter((s) => s.category === "social");
-  const documentSizes = allSizes.filter((s) => s.category === "document");
+  const presetSizes = allSizes.filter((s) => s.category === "preset");
   const customSizes = allSizes.filter((s) => s.category === "custom");
 
   // 监听当前尺寸变化，同步更新 aspectRatio
@@ -130,10 +129,10 @@ export function CanvasSizeSelector() {
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
-      case "social":
-        return <Smartphone className="w-4 h-4" />;
-      case "document":
-        return <FileText className="w-4 h-4" />;
+      case "preset":
+        return <Monitor className="w-4 h-4" />;
+      case "custom":
+        return <Edit className="w-4 h-4" />;
       default:
         return <Monitor className="w-4 h-4" />;
     }
@@ -200,36 +199,14 @@ export function CanvasSizeSelector() {
         当前: {currentSize.name} ({currentSize.width} × {currentSize.height})
       </div>
 
-      <Tabs defaultValue="social" className="w-full">
+      <Tabs defaultValue="preset" className="w-full">
         <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="social">社交媒体</TabsTrigger>
-          {/* <TabsTrigger value="document">文档</TabsTrigger> */}
+          <TabsTrigger value="preset">常用尺寸</TabsTrigger>
           <TabsTrigger value="custom">自定义</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="social" className="space-y-2">
-          {socialSizes.map((size) => (
-            <Button
-              key={size.id}
-              variant={currentSize.id === size.id ? "default" : "outline"}
-              className="w-full justify-start h-auto p-3"
-              onClick={() => handleSizeChange(size)}
-            >
-              <div className="flex items-center gap-2">
-                {getCategoryIcon(size.category)}
-                <div className="text-left">
-                  <div className="font-medium">{size.name}</div>
-                  <div className="text-xs text-muted-foreground">
-                    {size.width} × {size.height}
-                  </div>
-                </div>
-              </div>
-            </Button>
-          ))}
-        </TabsContent>
-
-        <TabsContent value="document" className="space-y-2">
-          {documentSizes.map((size) => (
+        <TabsContent value="preset" className="space-y-2">
+          {presetSizes.map((size) => (
             <Button
               key={size.id}
               variant={currentSize.id === size.id ? "default" : "outline"}

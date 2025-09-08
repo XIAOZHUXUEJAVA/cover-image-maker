@@ -6,31 +6,31 @@ import { useCanvasStore } from "@/lib/store/canvas-store";
 export function CoverCanvas() {
   const ref = useRef<HTMLDivElement | null>(null);
   const { currentSize } = useCanvasStore();
-  
+
   // 计算合适的显示尺寸，保持宽高比的同时适应容器
   const displaySize = useMemo(() => {
     const maxWidth = 800; // 最大显示宽度
     const maxHeight = 600; // 最大显示高度
-    
+
     const aspectRatio = currentSize.width / currentSize.height;
-    
+
     let displayWidth = currentSize.width;
     let displayHeight = currentSize.height;
-    
+
     // 如果尺寸太大，按比例缩小到合适的显示尺寸
     if (displayWidth > maxWidth) {
       displayWidth = maxWidth;
       displayHeight = displayWidth / aspectRatio;
     }
-    
+
     if (displayHeight > maxHeight) {
       displayHeight = maxHeight;
       displayWidth = displayHeight * aspectRatio;
     }
-    
+
     return {
       width: Math.round(displayWidth),
-      height: Math.round(displayHeight)
+      height: Math.round(displayHeight),
     };
   }, [currentSize.width, currentSize.height]);
 
@@ -62,22 +62,48 @@ export function CoverCanvas() {
     avatarOffsetY,
   } = useCoverStore();
 
+  // 计算缩放比例
+  const scale = useMemo(() => {
+    return Math.min(
+      displaySize.width / currentSize.width,
+      displaySize.height / currentSize.height
+    );
+  }, [
+    displaySize.width,
+    displaySize.height,
+    currentSize.width,
+    currentSize.height,
+  ]);
+
   return (
-    <div className="w-full flex items-center justify-center p-4">
+    <div className="w-full flex flex-col items-center justify-center p-4">
+      {/* 画布信息显示 */}
+      <div className="mb-3 text-center">
+        <div className="text-sm font-medium text-foreground">
+          画布尺寸: {currentSize.width} × {currentSize.height}
+        </div>
+        <div className="text-xs text-muted-foreground">
+          显示尺寸: {displaySize.width} × {displaySize.height}
+          {scale < 1 && (
+            <span className="ml-1">(缩放至 {Math.round(scale * 100)}%)</span>
+          )}
+        </div>
+      </div>
+
       <div
         id="cover-canvas-container"
         className="relative"
         style={{
           width: `${displaySize.width}px`,
-          height: `${displaySize.height}px`
+          height: `${displaySize.height}px`,
         }}
       >
         <div
           id="cover-canvas"
           ref={ref}
           className="relative overflow-hidden rounded-md bg-muted shadow-lg w-full h-full"
-          style={{ 
-            fontFamily
+          style={{
+            fontFamily,
           }}
         >
           {imageUrl ? (
