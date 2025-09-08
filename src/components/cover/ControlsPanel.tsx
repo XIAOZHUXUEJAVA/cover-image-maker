@@ -123,16 +123,22 @@ export function ControlsPanel() {
           <span className="text-sm font-medium">快速操作</span>
         </div>
         <div className="flex items-center gap-2">
-          <Select onValueChange={(value) => {
-            const preset = quickPresets.find(p => p.name === value);
-            if (preset) state.applyPreset(preset);
-          }}>
+          <Select
+            onValueChange={(value) => {
+              const preset = quickPresets.find((p) => p.name === value);
+              if (preset) state.applyPreset(preset);
+            }}
+          >
             <SelectTrigger className="w-32 h-7 text-xs">
               <SelectValue placeholder="选择风格" />
             </SelectTrigger>
             <SelectContent>
               {quickPresets.map((preset) => (
-                <SelectItem key={preset.name} value={preset.name} className="text-xs">
+                <SelectItem
+                  key={preset.name}
+                  value={preset.name}
+                  className="text-xs"
+                >
                   {preset.name}
                 </SelectItem>
               ))}
@@ -150,11 +156,21 @@ export function ControlsPanel() {
 
       <Tabs defaultValue="canvas" className="space-y-6">
         <TabsList className="grid w-full grid-cols-5">
-          <TabsTrigger value="canvas" className="text-xs">画布</TabsTrigger>
-          <TabsTrigger value="content" className="text-xs">内容</TabsTrigger>
-          <TabsTrigger value="style" className="text-xs">样式</TabsTrigger>
-          <TabsTrigger value="layout" className="text-xs">布局</TabsTrigger>
-          <TabsTrigger value="bg" className="text-xs">背景</TabsTrigger>
+          <TabsTrigger value="canvas" className="text-xs">
+            画布
+          </TabsTrigger>
+          <TabsTrigger value="content" className="text-xs">
+            内容
+          </TabsTrigger>
+          <TabsTrigger value="style" className="text-xs">
+            样式
+          </TabsTrigger>
+          <TabsTrigger value="layout" className="text-xs">
+            布局
+          </TabsTrigger>
+          <TabsTrigger value="bg" className="text-xs">
+            背景
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="content" className="space-y-6">
@@ -162,7 +178,9 @@ export function ControlsPanel() {
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <Label htmlFor="title">标题</Label>
-                <span className="text-xs text-muted-foreground">{state.title.length}/50</span>
+                <span className="text-xs text-muted-foreground">
+                  {state.title.length}/50
+                </span>
               </div>
               <Input
                 id="title"
@@ -176,7 +194,9 @@ export function ControlsPanel() {
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <Label htmlFor="subtitle">副标题</Label>
-                <span className="text-xs text-muted-foreground">{state.subtitle.length}/100</span>
+                <span className="text-xs text-muted-foreground">
+                  {state.subtitle.length}/100
+                </span>
               </div>
               <Input
                 id="subtitle"
@@ -188,7 +208,7 @@ export function ControlsPanel() {
               />
             </div>
           </div>
-          
+
           <div className="grid grid-cols-2 gap-5">
             <div>
               <div className="flex items-center justify-between">
@@ -221,7 +241,7 @@ export function ControlsPanel() {
               />
             </div>
           </div>
-          
+
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-3">
@@ -243,14 +263,16 @@ export function ControlsPanel() {
                 </div>
                 {/* 预设颜色 */}
                 <div className="flex gap-1">
-                  {['#ffffff', '#000000', '#3b82f6', '#ef4444', '#10b981'].map(color => (
-                    <button
-                      key={color}
-                      className="w-6 h-6 rounded border-2 border-white shadow-sm hover:scale-110 transition-transform"
-                      style={{ backgroundColor: color }}
-                      onClick={() => state.setTitleColor(color)}
-                    />
-                  ))}
+                  {["#ffffff", "#000000", "#3b82f6", "#ef4444", "#10b981"].map(
+                    (color) => (
+                      <button
+                        key={color}
+                        className="w-6 h-6 rounded border-2 border-white shadow-sm hover:scale-110 transition-transform"
+                        style={{ backgroundColor: color }}
+                        onClick={() => state.setTitleColor(color)}
+                      />
+                    )
+                  )}
                 </div>
               </div>
               <div className="space-y-3">
@@ -272,19 +294,21 @@ export function ControlsPanel() {
                 </div>
                 {/* 预设颜色 */}
                 <div className="flex gap-1">
-                  {['#e5e5e5', '#6b7280', '#3b82f6', '#ef4444', '#10b981'].map(color => (
-                    <button
-                      key={color}
-                      className="w-6 h-6 rounded border-2 border-white shadow-sm hover:scale-110 transition-transform"
-                      style={{ backgroundColor: color }}
-                      onClick={() => state.setSubtitleColor(color)}
-                    />
-                  ))}
+                  {["#e5e5e5", "#6b7280", "#3b82f6", "#ef4444", "#10b981"].map(
+                    (color) => (
+                      <button
+                        key={color}
+                        className="w-6 h-6 rounded border-2 border-white shadow-sm hover:scale-110 transition-transform"
+                        style={{ backgroundColor: color }}
+                        onClick={() => state.setSubtitleColor(color)}
+                      />
+                    )
+                  )}
                 </div>
               </div>
             </div>
           </div>
-          
+
           <div className="space-y-3">
             <Label>字体</Label>
             <Select
@@ -410,10 +434,10 @@ export function ControlsPanel() {
             {/* 快速遮罩预设 */}
             <div className="grid grid-cols-4 gap-2">
               {[
-                { color: '#000000', opacity: 0.3, name: '深色' },
-                { color: '#ffffff', opacity: 0.2, name: '浅色' },
-                { color: '#3b82f6', opacity: 0.25, name: '蓝色' },
-                { color: '#000000', opacity: 0, name: '无遮罩' }
+                { color: "#000000", opacity: 0.3, name: "深色" },
+                { color: "#ffffff", opacity: 0.2, name: "浅色" },
+                { color: "#3b82f6", opacity: 0.25, name: "蓝色" },
+                { color: "#000000", opacity: 0, name: "无遮罩" },
               ].map((preset) => (
                 <button
                   key={preset.name}
@@ -464,7 +488,9 @@ export function ControlsPanel() {
               <label className="flex items-center justify-between p-3 rounded-lg border hover:bg-accent transition-colors cursor-pointer">
                 <div>
                   <div className="text-sm font-medium">自动对比色</div>
-                  <div className="text-xs text-muted-foreground">根据背景自动调整文字颜色</div>
+                  <div className="text-xs text-muted-foreground">
+                    根据背景自动调整文字颜色
+                  </div>
                 </div>
                 <input
                   type="checkbox"
@@ -476,7 +502,9 @@ export function ControlsPanel() {
               <label className="flex items-center justify-between p-3 rounded-lg border hover:bg-accent transition-colors cursor-pointer">
                 <div>
                   <div className="text-sm font-medium">显示安全边距</div>
-                  <div className="text-xs text-muted-foreground">显示内容安全区域参考线</div>
+                  <div className="text-xs text-muted-foreground">
+                    显示内容安全区域参考线
+                  </div>
                 </div>
                 <input
                   type="checkbox"
@@ -491,8 +519,8 @@ export function ControlsPanel() {
 
         <TabsContent value="canvas" className="space-y-6">
           <CanvasSizeSelector />
-          
-          <div className="space-y-2">
+
+          {/* <div className="space-y-2">
             <Label>画布比例</Label>
             <Select
               value={state.aspectRatio}
@@ -508,7 +536,7 @@ export function ControlsPanel() {
                 <SelectItem value="3 / 4">3:4</SelectItem>
               </SelectContent>
             </Select>
-          </div>
+          </div> */}
         </TabsContent>
 
         <TabsContent value="bg" className="space-y-6">
