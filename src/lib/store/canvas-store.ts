@@ -60,7 +60,7 @@ export const defaultSizes: CanvasSize[] = [
     width: 1920,
     height: 1080,
     aspectRatio: "16 / 9",
-    category: "document",
+    category: "social",
   },
   {
     id: "a4",
@@ -68,7 +68,7 @@ export const defaultSizes: CanvasSize[] = [
     width: 1754,
     height: 1240,
     aspectRatio: "1754 / 1240",
-    category: "document",
+    category: "social",
   },
   {
     id: "poster",
@@ -76,7 +76,7 @@ export const defaultSizes: CanvasSize[] = [
     width: 1080,
     height: 1920,
     aspectRatio: "9 / 16",
-    category: "document",
+    category: "social",
   },
 ];
 
